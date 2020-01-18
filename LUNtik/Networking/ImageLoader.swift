@@ -6,7 +6,7 @@
 //  Copyright © 2020 Nikandr Marhal. All rights reserved.
 //
 
-import Foundation
+import Alamofire
 
 enum ImageLoadError: Error {
     case loadingFailed(String)
@@ -14,18 +14,14 @@ enum ImageLoadError: Error {
 
 class ImageLoader {
     static func downloadImage(from url: URL, completion: @escaping (Result<Data, ImageLoadError>) -> Void) {
-        ImageLoader.getData(from: url) { data, response, error in
+        AF.request(url).responseData { response in
             var result: Result<Data, ImageLoadError>!
-            if let error = error {
+            if let error = response.error {
                 result = .failure(.loadingFailed(error.localizedDescription))
-            } else if let data = data {
+            } else if let data = response.data {
                 result = .success(data)
             }
             completion(result)
         }
-    }
-    
-    private static func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
 }

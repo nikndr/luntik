@@ -23,19 +23,21 @@ class CardVC: UIViewController {
         guard let residence = residence else {
             fatalError("residence is nil after view controller presentation")
         }
-        
-        guard let url = URL(string: residence.imageURL) else {
-            fatalError("invalid image url") // TODO: add default image
-        }
+        let defaultImage = UIImage(named: Images.defaultBuilding.rawValue)!
         streetNameLabel.text = residence.address
-        residenceNameLabel.text = residence.title ?? "Todo default text" //TODO: default text
-        DispatchQueue.main.async {
-            ImageLoader.downloadImage(from: url) { [weak self] result in
+        residenceNameLabel.text = residence.title ?? "Житловий комплекс"
+        guard let url = URL(string: residence.imageURL) else {
+            residenceImageView.image = defaultImage
+            return
+        }
+        
+        ImageLoader.downloadImage(from: url) { [weak self] result in
+            DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
-                    self?.residenceImageView.image = UIImage(data: data) //?? //TODO: set default image
-                case .failure(let error):
-                    print(error) //TODO: set default image
+                    self?.residenceImageView.image = UIImage(data: data) ?? defaultImage
+                case .failure:
+                    self?.residenceImageView.image = defaultImage
                 }
             }
         }

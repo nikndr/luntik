@@ -13,17 +13,19 @@ class MapScreenVC: UIViewController {
     @IBOutlet var mapView: MKMapView!
     
     var selectedResidence: Residence?
+    var annotations: [ResidenceAnnotation]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         mapView.delegate = self
         
         mapPrimaryLocation()
+        addAnnotations()
         
-        let artwork = Residence(title: "Ліпкі", address: "вул. Крєщатік", coordinate: CLLocationCoordinate2D(latitude: 50.4501, longitude: 30.5234), imageURL: "https://img.lun.ua/building-1600x1200/2708.jpg")
-        mapView.addAnnotation(artwork)
+        
     }
+    
+    // MARK: - Primary map setup
     
     private func mapPrimaryLocation() {
         let initialLocation = CLLocation(latitude: 50.4501, longitude: 30.5234)
@@ -35,9 +37,25 @@ class MapScreenVC: UIViewController {
         mapView.setRegion(coordinateRegion, animated: true)
     }
     
+    // MARK: - Add annotations to the map
+    
+    private func addAnnotations() {
+        APIClient.getResidenceData { result in
+            switch result {
+            case .success(let residences):
+                for residence in residences {
+                    self.mapView.addAnnotation(ResidenceAnnotation(fromResidence: residence))
+//                    self.annotations.append(ResidenceAnnotation(fromResidence: residence))
+                }
+            case .failure:
+                fatalError("could not get residence info")
+            }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == SegueIdentifiers.showCard.rawValue {
-            let navigationController = segue.destination as! UINavigationController //TODO: find first controller in navigation controller
+            let navigationController = segue.destination as! UINavigationController
             guard let cardVC = navigationController.viewControllers.first as? CardVC else {
                 fatalError("card vc is not found")
             }
@@ -53,12 +71,9 @@ class MapScreenVC: UIViewController {
 
 extension MapScreenVC: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
-        guard
-            let residence = view.annotation as? Residence,
-            let title = residence.title
-        else { return }
-        print(title)
-        // TODO: - implement presentation of modal VC
+        guard let residenceAnnotation = view.annotation as? ResidenceAnnotation else { return }
+        let residence = residenceAnnotation.residence
+        selectedResidence = residence
         performSegue(withIdentifier: SegueIdentifiers.showCard.rawValue, sender: self)
     }
     
