@@ -13,7 +13,6 @@ class MapScreenVC: UIViewController {
     @IBOutlet var mapView: MKMapView!
     
     var selectedResidence: Residence?
-    var annotations: [ResidenceAnnotation]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +44,11 @@ class MapScreenVC: UIViewController {
             case .success(let residences):
                 for residence in residences {
                     self.mapView.addAnnotation(ResidenceAnnotation(fromResidence: residence))
-//                    self.annotations.append(ResidenceAnnotation(fromResidence: residence))
                 }
             case .failure:
-                fatalError("could not get residence info")
+                let alert = UIAlertController(title: "Сталася помилка", message: "Не вийшло завантажити дані про ЖК. Перевірте підключення до Інтернету", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Добре", style: .default, handler: nil))
+                self.present(alert, animated: true)
             }
         }
     }
@@ -57,10 +57,13 @@ class MapScreenVC: UIViewController {
         if segue.identifier == SegueIdentifiers.showCard.rawValue {
             let navigationController = segue.destination as! UINavigationController
             guard let cardVC = navigationController.viewControllers.first as? CardVC else {
-                fatalError("card vc is not found")
+                return
             }
             guard let residence = selectedResidence else {
-                fatalError("cannot pass residence to card view controller")
+                let alert = UIAlertController(title: "Сталася помилка", message: "Перезавантажте додаток", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Добре", style: .default, handler: nil))
+                self.present(alert, animated: true)
+                return
             }
             cardVC.residence = residence
         }

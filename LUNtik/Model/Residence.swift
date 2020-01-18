@@ -14,6 +14,8 @@ struct Residence {
     let imageURL: String
     let lat: Double
     let long: Double
+    
+    static let defaultTitle = "Житловий комплекс"
 }
 
 extension Residence: Decodable {
@@ -45,7 +47,7 @@ class ResidenceAnnotation: NSObject, MKAnnotation {
     
     init(fromResidence residence: Residence) {
         self.residence = residence
-        self.title = self.residence.title ?? "Житловий комплекс"
+        self.title = self.residence.title ?? Residence.defaultTitle
         self.coordinate = CLLocationCoordinate2D(latitude: self.residence.lat, longitude: self.residence.long)
         super.init()
     }

@@ -23,7 +23,6 @@
 		D4C04ABD23D312F200CA7875 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C04ABC23D312F200CA7875 /* Images.swift */; };
 		D4C04ABF23D321AF00CA7875 /* APIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C04ABE23D321AF00CA7875 /* APIRouter.swift */; };
 		D4C04AC123D3221100CA7875 /* Contsants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C04AC023D3221100CA7875 /* Contsants.swift */; };
-		D4C04AC323D338B800CA7875 /* ResidenceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C04AC223D338B800CA7875 /* ResidenceLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -46,7 +45,6 @@
 		D4C04ABC23D312F200CA7875 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		D4C04ABE23D321AF00CA7875 /* APIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRouter.swift; sourceTree = "<group>"; };
 		D4C04AC023D3221100CA7875 /* Contsants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contsants.swift; sourceTree = "<group>"; };
-		D4C04AC223D338B800CA7875 /* ResidenceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResidenceLoader.swift; sourceTree = "<group>"; };
 		E6211FE96289237F5978C3A3 /* Pods-LUNtik.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LUNtik.debug.xcconfig"; path = "Target Support Files/Pods-LUNtik/Pods-LUNtik.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -114,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				D4C04AAB23D2185400CA7875 /* Residence.swift */,
-				D4C04AC223D338B800CA7875 /* ResidenceLoader.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -288,7 +285,6 @@
 				D4C04ABD23D312F200CA7875 /* Images.swift in Sources */,
 				D42DA1A923D209F000470E1F /* AppDelegate.swift in Sources */,
 				D42DA1AB23D209F000470E1F /* SceneDelegate.swift in Sources */,
-				D4C04AC323D338B800CA7875 /* ResidenceLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

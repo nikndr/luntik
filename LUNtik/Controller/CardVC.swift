@@ -11,7 +11,7 @@ import UIKit
 class CardVC: UIViewController {
     // MARK: - Model reference
     
-    var residence: Residence?
+    var residence: Residence!
     
     // MARK: - Outlets
     
@@ -20,12 +20,9 @@ class CardVC: UIViewController {
     @IBOutlet var streetNameLabel: UILabel!
     
     private func setUpOutlets() {
-        guard let residence = residence else {
-            fatalError("residence is nil after view controller presentation")
-        }
         let defaultImage = UIImage(named: Images.defaultBuilding.rawValue)!
         streetNameLabel.text = residence.address
-        residenceNameLabel.text = residence.title ?? "Житловий комплекс"
+        residenceNameLabel.text = residence.title ?? Residence.defaultTitle
         guard let url = URL(string: residence.imageURL) else {
             residenceImageView.image = defaultImage
             return
